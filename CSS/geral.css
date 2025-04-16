@@ -4,6 +4,7 @@ body {
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     font-style: normal;
+    font-size: 3vw;
     color: white;
     background-color: black;
     text-align: center;
@@ -18,14 +19,24 @@ h1 {
 }
 
 a, button, input {
-    background-color: white;
-    color: black;
-    padding: 0.5%;
-    padding-left: 2%;
-    padding-right: 2%;
-    border-radius: 50px;
+    font-size: 7vw;
     text-decoration: none;
+    color: white;
+    display: inline;
+}
+
+button, input {
     border: none;
+    background: none;
+    outline: none;
+    box-shadow: none;
+}
+
+input {
+    border-bottom: 4px solid white;
+    text-align: center;
+    margin-top: 5%;
+    margin-bottom: 5%;
 }
 
 a:hover, button:hover {
@@ -37,4 +48,25 @@ a:hover, button:hover {
     flex-direction: column;
     align-items: center;
     gap: 1rem; 
+}
+
+footer {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7%;
+    position: absolute;
+    bottom: 5%;
+}
+
+.next {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 7%;
+    position: absolute;
+    bottom: 5%;
+    right: 7%;
 }
