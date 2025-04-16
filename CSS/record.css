@@ -13,3 +13,38 @@ button {
 audio {
     margin-top: 20px;
 }
+
+#control {
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    background-color: #00aaff;
+    cursor: pointer;
+}
+
+#control.recording {
+    border-radius: 10px;
+}
+
+#control.finished {
+    background: none;
+    width: auto;
+    height: auto;
+    border: none;
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+}
+
+#control.finished::before {
+    content: '🔁';
+    font-size: 30px;
+    cursor: pointer;
+}
+
+#control.finished::after {
+    content: '➡️';
+    font-size: 30px;
+    cursor: pointer;
+}
