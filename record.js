@@ -1,61 +1,77 @@
-let mediaRecorder;
-let audioChunks = [];
-let audioBlob;
+let media_recorder; // MediaRecorder: API responsável por capturar e gravar áudio (controla o início, fim e processamento da gravação)
+let audio_chunks = []; // blocos de dados de áudio capturados durante a gravação
+let final_audio; // armazena o ficheiro final de áudio
 
-const controlBtn = document.getElementById('control');
-const audioPlayer = document.getElementById('audioPlayer');
+let control_bottom = document.getElementById('control'); // seleciona o botão de controlo e o player de áudio
+let audio_player = document.getElementById('audioPlayer'); // seleciona o player de áudio
 
-let state = 'idle'; // idle | recording | finished
+let state = 'idle'; // Estado inicial: pode ser idle/recording/finished
 
-controlBtn.onclick = async (e) => {
+// Clique no botão de controlo
+control_bottom.onclick = async (e) => {
+
+  // se estiver em estado 'idle', começa a gravar
   if (state === 'idle') {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorder = new MediaRecorder(stream);
-    audioChunks = [];
+    // pede permissão para usar o microfone e inicia a captura do áudio
+    let stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    media_recorder = new MediaRecorder(stream);
+    audio_chunks = [];
 
-    mediaRecorder.ondataavailable = event => {
-      if (event.data.size > 0) audioChunks.push(event.data);
+    // quando houver dados disponíveis, guarda-os no array
+    media_recorder.ondataavailable = event => {
+      if (event.data.size > 0) audio_chunks.push(event.data);
     };
 
-    mediaRecorder.onstop = () => {
-      audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-      const audioURL = URL.createObjectURL(audioBlob);
-      audioPlayer.src = audioURL;
-      audioPlayer.play();
+    // quando a gravação parar
+    media_recorder.onstop = () => {
+      // cria um Blob com os dados de áudio recolhidos
+      final_audio = new Blob(audio_chunks, { type: 'audio/webm' });
 
-      // Muda para o estado final (loop com opções)
+       // cria uma URL temporária para o Blob e atribui ao player
+      let audio_url = URL.createObjectURL(final_audio);
+      audio_player.src = audio_url;
+      audio_player.play(); // reproduz automaticamente o áudio
+
+      // muda o estado para 'finished' e atualiza a interface
       state = 'finished';
-      updateUI();
+      update_interface();
     };
 
-    mediaRecorder.start();
+    // inicia a gravação
+    media_recorder.start();
     state = 'recording';
     updateUI();
 
+    // se estiver a gravar, para a gravação
   } else if (state === 'recording') {
-    mediaRecorder.stop();
-  } else if (state === 'finished') {
-    const isLeft = e.offsetX < controlBtn.offsetWidth / 2;
-    if (isLeft) {
-      // Regravar
-      audioPlayer.pause();
-      audioPlayer.src = '';
-      state = 'idle';
-      updateUI();
-    } else {
-      // Enviar para o servidor
-      const formData = new FormData();
-      formData.append('audio', audioBlob, 'emotion.webm');
+    media_recorder.stop();
 
+    // se a gravação já terminou = estado 'finished'
+  } else if (state === 'finished') {
+
+    // verifica se o clique foi na metade esq ou dta 
+    let isLeft = e.offsetX < control_bottom.offsetWidth / 2;
+    if (isLeft) {
+      // se foi à esq: regravar
+      audio_player.pause(); // para a reprodução
+      audio_player.src = ''; // limpa o player
+      state = 'idle'; // volta ao estado inicial
+      update_interface();
+    } else {
+      // se foi à dta: enviar o áudio para o servidor
+      let form_data = new FormData(); // cria um FormData com o áudio
+      form_data.append('audio', final_audio, 'emotion.webm');
+
+      // envia o áudio via POST para o servidor
       fetch('http://localhost:3000/upload', {
         method: 'POST',
-        body: formData
+        body: form_data
       })
       .then(res => res.json())
       .then(data => {
         console.log('Áudio guardado!', data);
         alert('Áudio guardado com sucesso!');
-        // Aqui podes avançar para outro ecrã se quiseres
+        // avancar aqui para o proximo ecra!!!
       })
       .catch(err => {
         console.error('Erro ao guardar áudio:', err);
@@ -64,17 +80,17 @@ controlBtn.onclick = async (e) => {
   }
 };
 
-function updateUI() {
-  controlBtn.className = ''; // reset
+function update_interface() {
+  control_bottom.className = ''; // limpa as classes anteriores
 
   if (state === 'idle') {
-    controlBtn.classList.add('start');
-    controlBtn.innerHTML = '';
+    control_bottom.classList.add('start'); // estilo de botão pronto para gravar
+    control_bottom.innerHTML = ''; // conteudo gerado por css
   } else if (state === 'recording') {
-    controlBtn.classList.add('recording');
-    controlBtn.innerHTML = '';
+    control_bottom.classList.add('recording'); // estilo de gravação
+    control_bottom.innerHTML = ''; // conteudo gerado por css
   } else if (state === 'finished') {
-    controlBtn.classList.add('finished');
-    controlBtn.innerHTML = ''; // conteúdo gerado por CSS
+    control_bottom.classList.add('finished'); // estilo de botão dividido (regravar ou enviar)
+    control_bottom.innerHTML = ''; // conteúdo gerado por css
   }
 }
