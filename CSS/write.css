@@ -1,20 +1,23 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 button,
 input {
     border: none;
     background: none;
     outline: none;
     box-shadow: none;
+    width: 40%;
+    color: white;    
 }
 
-a,
-button,
 input {
-    font-size: 7vw;
+    font-size: 2.5vw;
     text-decoration: none;
-    color: white;
-    display: inline;
 }
-
 
 input {
     border-bottom: 4px solid white;
@@ -23,9 +26,3 @@ input {
     margin-bottom: 5%;
 }
 
-.form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
