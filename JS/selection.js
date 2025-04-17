@@ -1,60 +1,65 @@
-let emocoes = document.querySelectorAll(".emocoes img");
-let glowElement = document.querySelector('.glow');
+let glow = [document.getElementById('glow1'), document.getElementById('glow2')];
+let x = [100, window.innerWidth - 100];
+let y = [100, window.innerHeight - 100];
+let speedX = [1, 1];
+let speedY = [1, 1];
+let cor = ['#FB5E4D', '#4ECAFF', '#E8A3FF', '#F1C103'];
+
+let img = [document.getElementById('raiva'), document.getElementById('tristeza'),
+document.getElementById('neutro'), document.getElementById('felicidade')];
 let seta = document.querySelector(".seta polyline");
 
-let x = 100;
-let y = 100;
-let speedX = 1;
-let speedY = 1;
-let animationId; // para poder parar/reiniciar se necessário
 
-let cores = [
-    '#FB5E4D',
-    '#4ECAFF',
-    '#E8A3FF',
-    '#F1C103'
-];
+function setup() {
+    createCanvas(window.innerWidth, window.innerHeight);
+    canvas.style.position = 'absolute';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.zIndex = -1;
 
-let index = 0; 
 
-for (let i = 0; i < emocoes.length; i++) {
-    emocoes[i].addEventListener("click", desfoque);
-    emocoes[i].cor = cores[i];
-}
+    // Inicializa a posição dos glows no DOM
+    glow[0].style.left = `${x[0]}px`;
+    glow[0].style.top = `${y[0]}px`;
+    glow[1].style.left = `${x[1]}px`;
+    glow[1].style.top = `${y[1]}px`;
 
-function desfoque(event) {
-    // Aplica blur a todas
-    for (let i = 0; i < emocoes.length; i++) {
-        emocoes[i].style.filter = "blur(5px)";
-    }
-
-    // Remove blur da imagem clicada
-    event.currentTarget.style.filter = "blur(0px)";
-    
-    // Atualiza a cor do gradiente e da seta
-    glowElement.style.background = event.currentTarget.cor;
-    seta.style.stroke = event.currentTarget.cor;
-
-    // Mostra o gradiente (não reinicia a animação)
-    glowElement.style.display = "block";
-
-    if (!animationId) {
-        gradiente(); // Começa a animação se ela ainda não foi iniciada
+    for (let i = 0; i < img.length; i++) {
+        img[i].addEventListener('click', () => {
+            glow[0].style.background = cor[i];
+            glow[1].style.background = cor[i];
+            seta.style.stroke = cor[i];
+            
+            for (let j = 0; j < img.length; j++) {
+                if (j !== i) {
+                    img[j].style.filter = "blur(5px)"; // Adiciona um blur a todas as imagens
+                }else{
+                    img[i].style.filter = "blur(0px)"; //Tira o blur da imagem atual
+                }
+            }
+        });
     }
 }
 
-function gradiente() {
-    // Atualiza posição
-    x += speedX;
-    y += speedY;
+function draw() {
+    for (let i = 0; i < glow.length; i++) {
+        // Atualiza a posição de cada glow
+        x[i] += speedX[i];
+        y[i] += speedY[i];
 
-    // Verifica limites e inverte direção
-    if (x + 100 > window.innerWidth || x < -100) speedX = -speedX;
-    if (y + 100 > window.innerHeight || y < -100) speedY = -speedY;
+        // Verifica se o glow atingiu as bordas da tela e inverte a direção
+        if (x[i] + 100 > window.innerWidth || x[i] < -100) {
+            speedX[i] = -speedX[i];
+        }
+        if (y[i] + 100 > window.innerHeight || y[i] < -100) {
+            speedY[i] = -speedY[i];
+        }
 
-    glowElement.style.left = `${x}px`;
-    glowElement.style.top = `${y}px`;
-
-    // Continua animação
-    animationId = requestAnimationFrame(gradiente);
+        // Atualiza a posição do glow
+        glow[i].style.left = `${x[i]}px`;
+        glow[i].style.top = `${y[i]}px`;
+    }
 }
+
+
+

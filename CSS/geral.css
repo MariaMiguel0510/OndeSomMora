@@ -48,11 +48,15 @@ footer {
 }
 
 .glow {
-    z-index: -5;
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
+    background: none;
     border-radius: 50%;
-    filter: blur(150px);
-    position: absolute; /* Certifique-se de que o glow é posicionado de forma absoluta */
-    display: none;
+    filter: blur(200px);
+    position: absolute;
+    z-index: 0; 
   }
+
+p{
+    z-index: 5;
+}
