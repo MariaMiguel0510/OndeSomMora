@@ -1,0 +1,28 @@
+main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    gap: 13%;
+}
+
+.emocoes{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
+}
+
+.emocoes>img{
+    width: 8%;
+    height: auto;
+    filter: blur(5px);
+    cursor: pointer;
+}
+
+footer{
+    position: relative;
+    bottom: 15%;
+}
