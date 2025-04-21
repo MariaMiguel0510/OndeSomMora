@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="CSS/geral.css">
@@ -15,18 +16,16 @@
         <div class="glow" id="glow1"></div>
         <div class="glow" id="glow2"></div>
         <p>Que palavra descreve essa emoção</p>
-        <form>
-            <div class="form">
-                <input type="text" name="word">
-                <button type="submit">
-                    <svg class="seta" viewBox="0 0 841.89 595.28" xmlns="http://www.w3.org/2000/svg">
-                        <polyline points="378.49,175.7 491.55,328.76 378.49,481.82" />
-                    </svg>
-                </button>
-            </div>
+        <form action="deep.html">
+            <input type="text" name="word" required>
+            <button type="submit">
+                <svg class="seta" viewBox="0 0 841.89 595.28" xmlns="http://www.w3.org/2000/svg">
+                    <polyline points="378.49,175.7 491.55,328.76 378.49,481.82" />
+                </svg>
+            </button>
         </form>
     </main>
-
+    <script src="JS/gradiente.js"></script>
 </body>
 
 </html>

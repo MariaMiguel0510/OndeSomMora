@@ -1,9 +1,12 @@
-
 h1 {
     font-size: 6.5vw;
 }
 
-footer{
+footer {
     position: relative;
     top: 5%;
+}
+
+p {
+    position: relative;
 }

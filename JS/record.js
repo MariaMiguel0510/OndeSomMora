@@ -27,38 +27,36 @@ control_bottom.onclick = async (e) => {
       // cria um Blob com os dados de áudio recolhidos
       final_audio = new Blob(audio_chunks, { type: 'audio/webm' });
 
-       // cria uma URL temporária para o Blob e atribui ao player
+      // cria uma URL temporária para o Blob e atribui ao player
       let audio_url = URL.createObjectURL(final_audio);
       audio_player.src = audio_url;
       audio_player.play(); // reproduz automaticamente o áudio
 
       // muda o estado para 'finished' e atualiza a interface
       state = 'finished';
-      update_interface();
+      update_interface(); // Chama a função correta para atualizar a interface
     };
 
     // inicia a gravação
     media_recorder.start();
     state = 'recording';
-    updateUI();
+    update_interface(); // Chama a função correta para atualizar a interface
 
-    // se estiver a gravar, para a gravação
   } else if (state === 'recording') {
     media_recorder.stop();
 
-    // se a gravação já terminou = estado 'finished'
   } else if (state === 'finished') {
 
-    // verifica se o clique foi na metade esq ou dta 
+    // verifica se o clique foi na metade esquerda ou direita
     let isLeft = e.offsetX < control_bottom.offsetWidth / 2;
     if (isLeft) {
-      // se foi à esq: regravar
+      // se foi à esquerda: regravar
       audio_player.pause(); // para a reprodução
       audio_player.src = ''; // limpa o player
       state = 'idle'; // volta ao estado inicial
-      update_interface();
+      update_interface(); // Chama a função correta para atualizar a interface
     } else {
-      // se foi à dta: enviar o áudio para o servidor
+      // se foi à direita: enviar o áudio para o servidor
       let form_data = new FormData(); // cria um FormData com o áudio
       form_data.append('audio', final_audio, 'emotion.webm');
 
@@ -71,7 +69,7 @@ control_bottom.onclick = async (e) => {
       .then(data => {
         console.log('Áudio guardado!', data);
         alert('Áudio guardado com sucesso!');
-        // avancar aqui para o proximo ecra!!!
+        // avançar aqui para o próximo ecrã!!!
       })
       .catch(err => {
         console.error('Erro ao guardar áudio:', err);
@@ -80,17 +78,18 @@ control_bottom.onclick = async (e) => {
   }
 };
 
+// Função para atualizar a interface conforme o estado
 function update_interface() {
   control_bottom.className = ''; // limpa as classes anteriores
 
   if (state === 'idle') {
     control_bottom.classList.add('start'); // estilo de botão pronto para gravar
-    control_bottom.innerHTML = ''; // conteudo gerado por css
+    control_bottom.innerHTML = ''; // conteúdo gerado por CSS
   } else if (state === 'recording') {
     control_bottom.classList.add('recording'); // estilo de gravação
-    control_bottom.innerHTML = ''; // conteudo gerado por css
+    control_bottom.innerHTML = ''; // conteúdo gerado por CSS
   } else if (state === 'finished') {
     control_bottom.classList.add('finished'); // estilo de botão dividido (regravar ou enviar)
-    control_bottom.innerHTML = ''; // conteúdo gerado por css
+    control_bottom.innerHTML = ''; // conteúdo gerado por CSS
   }
 }

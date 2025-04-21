@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
     <meta charset="UTF-8" />
@@ -15,21 +16,32 @@
         <div class="glow" id="glow1"></div>
         <div class="glow" id="glow2"></div>
         <p>Como te sentes neste momento?</p>
-        <div class="emocoes">
-            <img id="raiva" src="images/raiva.png">
-            <img id="tristeza" src="images/tristeza.png">
-            <img id="neutro" src="images/neutralidade.png">
-            <img id="felicidade" src="images/felicidade.png">
-        </div>
+        <form class="emocoes" action="write.html">
+            <label>
+                <input type="radio" name="emocao" value="raiva" required />
+                <img src="images/raiva.png" alt="Raiva" />
+            </label>
+            <label>
+                <input type="radio" name="emocao" value="tristeza" />
+                <img src="images/tristeza.png" alt="Tristeza" />
+            </label>
+            <label>
+                <input type="radio" name="emocao" value="neutro" />
+                <img src="images/neutralidade.png" alt="Neutralidade" />
+            </label>
+            <label>
+                <input type="radio" name="emocao" value="felicidade" />
+                <img src="images/felicidade.png" alt="Felicidade" />
+            </label>
+        
+            <button type="submit">
+                <svg class="seta" viewBox="0 0 841.89 595.28" xmlns="http://www.w3.org/2000/svg">
+                    <polyline points="378.49,175.7 491.55,328.76 378.49,481.82" />
+                </svg>
+            </button>
+        </form>
+        
     </main>
-
-    <footer>
-        <a href="write.html">
-            <svg class="seta" viewBox="0 0 841.89 595.28" xmlns="http://www.w3.org/2000/svg">
-                <polyline points="378.49,175.7 491.55,328.76 378.49,481.82" />
-            </svg>
-        </a>
-    </footer>
     <script src="JS/selection.js"></script>
 </body>
 

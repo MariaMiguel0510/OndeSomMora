@@ -1,28 +1,38 @@
-.form {
+main{
+    height: 100%;
+}
+
+form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: absolute;
 }
 
-button,
-input {
+input, button{    
     border: none;
     background: none;
     outline: none;
     box-shadow: none;
-    width: 40%;
-    color: white;    
 }
 
 input {
+    color: white;  
     font-size: 2.5vw;
     text-decoration: none;
-}
-
-input {
-    border-bottom: 4px solid white;
+    border-bottom: 6px solid transparent;
     text-align: center;
-    margin-top: 5%;
-    margin-bottom: 5%;
 }
 
+
+button{
+    position: absolute;    
+    bottom: 15%;
+    cursor: pointer;
+}
+
+p{
+    top: 25%;
+}

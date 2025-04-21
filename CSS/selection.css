@@ -1,31 +1,48 @@
 main{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
     height: 100%;
-    gap: 13%;
-    position: relative;
 }
 
 .emocoes{
-    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 5%;
     position: relative;
     z-index: 10; /* Garante que fique acima dos glows */
+    gap: 5%;
 }
 
-.emocoes>img{
-    width: 8%;
+.emocoes>label>img{
+    width: 80%;
     height: auto;
     filter: blur(5px);
     cursor: pointer;
 }
 
-footer{
-    position: relative;
+button{
+    position: absolute;    
+    border: none;
+    background: none;
+    outline: none;
+    box-shadow: none;
     bottom: 15%;
+    cursor: pointer;
 }
+
+p{    
+    top: 20%;
+}
+
+/* Esconde o input mas mantém ele acessível */
+input[type="radio"] {
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+form.emocoes label {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+}
+
