@@ -34,17 +34,19 @@ control_bottom.onclick = async (e) => {
 
       // muda o estado para 'finished' e atualiza a interface
       state = 'finished';
-      update_interface(); // Chama a função correta para atualizar a interface
+      update_interface(); // função  para atualizar a interface
     };
 
     // inicia a gravação
     media_recorder.start();
     state = 'recording';
-    update_interface(); // Chama a função correta para atualizar a interface
+    update_interface(); // função para atualizar a interface
 
+    // se estiver a gravar, para a gravação
   } else if (state === 'recording') {
     media_recorder.stop();
 
+    // se a gravação já terminou = estado 'finished'
   } else if (state === 'finished') {
 
     // verifica se o clique foi na metade esquerda ou direita
@@ -54,7 +56,7 @@ control_bottom.onclick = async (e) => {
       audio_player.pause(); // para a reprodução
       audio_player.src = ''; // limpa o player
       state = 'idle'; // volta ao estado inicial
-      update_interface(); // Chama a função correta para atualizar a interface
+      update_interface(); 
     } else {
       // se foi à direita: enviar o áudio para o servidor
       let form_data = new FormData(); // cria um FormData com o áudio
@@ -78,18 +80,31 @@ control_bottom.onclick = async (e) => {
   }
 };
 
-// Função para atualizar a interface conforme o estado
 function update_interface() {
-  control_bottom.className = ''; // limpa as classes anteriores
+  control_bottom.className = ''; // limpa classes anteriores
+  control_bottom.innerHTML = ''; // limpa o conteúdo 
 
   if (state === 'idle') {
-    control_bottom.classList.add('start'); // estilo de botão pronto para gravar
-    control_bottom.innerHTML = ''; // conteúdo gerado por CSS
+    control_bottom.classList.add('start');
   } else if (state === 'recording') {
-    control_bottom.classList.add('recording'); // estilo de gravação
-    control_bottom.innerHTML = ''; // conteúdo gerado por CSS
+    control_bottom.classList.add('recording');
   } else if (state === 'finished') {
-    control_bottom.classList.add('finished'); // estilo de botão dividido (regravar ou enviar)
-    control_bottom.innerHTML = ''; // conteúdo gerado por CSS
+    control_bottom.classList.add('finished');
+
+     // Criar botão SVG para repetir gravacao
+    let svg_repeat = document.createElement("img");
+    svg_repeat.setAttribute("src", "re_record.svg"); // <- substitui aqui com o path correto
+    svg_repeat.setAttribute("class", "seta");
+    svg_repeat.setAttribute("alt", "Repetir"); 
+    svg_repeat.style.width = "20%";
+
+    // Criar botão SVG para avançar
+    let svg_next = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg_next.setAttribute("class", "seta");
+    svg_next.setAttribute("viewBox", "0 0 841.89 595.28");
+    svg_next.innerHTML = `<polyline points="378.49,175.7 491.55,328.76 378.49,481.82" stroke-width="20" fill="none"/>`;
+
+    control_bottom.appendChild(svg_repeat);
+    control_bottom.appendChild(svg_next);
   }
 }

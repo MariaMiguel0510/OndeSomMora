@@ -33,22 +33,8 @@ audio {
 
 #control.finished {
     background: none;
-    width: auto;
+    width: 40vw;
     height: auto;
-    border: none;
     display: flex;
-    gap: 40px;
-    justify-content: center;
-}
-
-#control.finished::before {
-    content: '🔁';
-    font-size: 30px;
-    cursor: pointer;
-}
-
-#control.finished::after {
-    content: '➡️';
-    font-size: 30px;
-    cursor: pointer;
+    justify-content: space-between;
 }
