@@ -20,18 +20,18 @@ app.use(express.static('uploads')); // permite aceder aos ficheiros enviados pel
 // configuração do Multer: define onde e como os ficheiros são guardados
 let storage = multer.diskStorage({
   // define onde os ficheiros serão guardados
-  destination: (req, file, cb) => {
+  destination: function(req, file, cb)  {
     cb(null, 'uploads/');
   },
 
   // define o nome do ficheiro: hora atual + nome original (evitar conflitos)
-  filename: (req, file, cb) => {
+  filename: function(req, file, cb) {
     let name = Date.now() + '-' + file.originalname;
     cb(null, name);
   }
 });
 
-let upload = multer({ storage }); // cria o multer com a configuração definida acima
+let upload = multer({ storage: storage }); // cria o multer com a configuração definida acima
 
 // define a rota e aceita ficheiros enviados com o nome audio, mas só 1 ficheiro de cada vez
 app.post('/upload', upload.single('audio'), (req, res) => {
