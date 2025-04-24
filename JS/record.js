@@ -124,7 +124,7 @@ function update_interface() {
 
     // Criar botão SVG para repetir gravação
     let svg_repeat = document.createElement("img");
-    svg_repeat.setAttribute("src", "re_record.svg"); // <- substitui com o caminho correto
+    svg_repeat.setAttribute("src", "/images/re_record.svg"); // <- substitui com o caminho correto
     svg_repeat.setAttribute("class", "seta");
     svg_repeat.setAttribute("alt", "Repetir");
     svg_repeat.style.width = "20%";
